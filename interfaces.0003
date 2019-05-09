@@ -1,0 +1,73 @@
+################################################################################
+###### Linux
+################################################################################
+
+DUART
+- UART1					Default Console
+- UART2					working
+
+SDHC
+- SD-CARD				SDR104 not working properly
+- MMC					HS400 Mode not working
+
+Ethernet
+- RGMII					working
+- SGMII					working
+- QSGMII Switch				working
+- PTP IEEE1588				working
+
+CAN					working
+
+SPI
+- SPI - Nor Flash			working
+- SPI3 - Generic			working
+
+GPIO					working
+
+I2C
+- DDR Temperaturesensor			working
+- Temperaturesensor			working
+- EEPROM				working
+- RTC					working
+- PortExpander				working
+
+USB
+- OTG					not working
+- Hub					working
+- Ports					working
+
+Audio					not implemented on MBLS1028a
+DisplayPort				not working for some displays
+miniPCIExpress				working
+SATA					working
+Clock generator				working
+
+################################################################################
+###### U-boot
+################################################################################
+
+Bootable from:
+SD-Card
+Emmc
+QSPI-Nor Flash
+
+Interfaces:
+DUART
+- UART1					Default Console
+- UART2					not working
+
+SDHC
+- SD-CARD				SDR104 not working properly
+- MMC					HS400 Mode not working
+
+Ethernet
+- RGMII					working
+- SGMII					working
+- QSGMII Switch				not working
+- PTP IEEE1588				not working
+
+SPI
+- SPI - Nor Flash			working
+
+I2C
+- RTC					working

@@ -1,0 +1,71 @@
+# Howto prepare build and build SD card images
+#
+# Required Toolchain: gcc-linaro-6.2.1-2016.11-i686_aarch64-linux-gnu
+# expected in /opt/gcc-linaro-6.2.1-2016.11-i686_aarch64-linux-gnu
+
+# Select board config
+./tools/config-mbls1028a
+
+# Build all Images
+make all
+
+# Images found at
+output/images/*
+
+QSPI-NOR-Flash Image:
+ #: name                size            offset          mask_flags
+ 0: RCW                 0x00080000      0x00000000      0
+ 1: PPA                 0x00080000      0x00080000      0
+ 2: U-Boot-PBL          0x00300000      0x00100000      0
+ 3: DTB                 0x00080000      0x00400000      0
+ 4: HDP                 0x00080000      0x00480000      0
+ 5: Linux               0x00a00000      0x00500000      0
+ 6: RootFS              0x03100000      0x00f00000      0
+
+EMMC / SD Image Layout
+ #: name                size            offset          mask_flags
+ 0: RCW                 0x000FF000      0x00001000      0
+ 1: U-Boot-PBL          0x00200000      0x00100000      0
+ 2: U-Boot-Env		0x00100000	0x00300000	0
+ 3: PPA                 0x03C00000      0x00400000      0
+ 5: Boot-Partition      0x10000000      0x04000000      0
+ 6: RootFS              0xFFFFFFFF      0x14000000      0
+
+ #: name                size            offset          mask_flags
+ 0: RCW                 0x00080000      0x00000000      0
+ 1: PPA                 0x00080000      0x00080000      0
+ 2: U-Boot-PBL          0x00300000      0x00100000      0
+ 3: DTB                 0x00080000      0x00400000      0
+ 4: HDP                 0x00080000      0x00480000      0
+ 5: Linux               0x00a00000      0x00500000      0
+ 6: RootFS              0x03100000      0x00f00000      0
+
+Write Image from U-Boot
+
+Load Image with tftp over dhcp
+=> setenv serverip <IP-ADDR>
+=> dhcp qspi_nor_flash.img
+Write Image to flash
+=> sf probe
+
+eventually erase flash first
+=> sf erase 0 0x4000000
+
+=> sf update $loadaddr 0 $filesize
+
+
+Write emmc Image from U-Boot
+
+Load Image with tftp over dhcp
+=> setenv serverip <IP-ADDR>
+=> dhcp emmc.img
+
+change to emmc
+=> mmc dev 1
+
+Calculate blocks to write
+=> setexpr blkc $filesize + 0x1ff
+=> setexpr blkc ${blkc} / 0x200
+
+Write to emmc
+=> mmc write $loadaddr 0 ${blkc}
