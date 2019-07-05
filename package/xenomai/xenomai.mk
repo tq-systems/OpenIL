@@ -15,7 +15,7 @@ XENOMAI_SITE = https://github.com/openil/xenomai-3.git
 XENOMAI_LICENSE = GPLv2+ with exception (headers), LGPLv2.1+ (libraries), GPLv2+ (kernel), GFDLv1.2+ (docs), GPLv2 (ipipe patch, can driver)
 # GFDL is not included but refers to gnu.org
 XENOMAI_SITE_METHOD = git
-XENOMAI_LICENSE_FILES = debian/copyright include/COPYING src/skins/native/COPYING ksrc/nucleus/COPYING
+XENOMAI_LICENSE_FILES = debian/copyright include/COPYING
 XENOMAI_INSTALL_STAGING = YES
 XENOMAI_INSTALL_TARGET_OPTS = DESTDIR=$(TARGET_DIR) install-user
 XENOMAI_INSTALL_STAGING_OPTS = DESTDIR=$(STAGING_DIR) install-user
