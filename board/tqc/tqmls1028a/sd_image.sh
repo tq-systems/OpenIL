@@ -12,7 +12,7 @@ main()
 	echo ${BR2_ROOTFS_PARTITION_SIZE}
 
 	# build the SDcard image
-	local FILES=""ls1028a-mbls1028a.dtb", "Image.gz""
+	local FILES=""ls1028a-mbls1028a.dtb", "Image.gz", "ls1028a-dp-fw.bin""
 	local GENIMAGE_CFG="$(mktemp --suffix genimage.cfg)"
 	local GENIMAGE_TMP="${BUILD_DIR}/genimage.tmp"
 
