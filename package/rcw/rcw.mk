@@ -4,8 +4,8 @@
 #
 ################################################################################
 
-RCW_VERSION = ls1028a-early-access
-RCW_SITE = https://source.codeaurora.org/external/qoriq/qoriq-components/rcw
+RCW_VERSION = TQMLS1028A-rcw-LSDK-18.12
+RCW_SITE = https://github.com/tq-systems/rcw.git
 RCW_SITE_METHOD = git
 RCW_LICENSE = BSD License
 RCW_LICENSE_FILES = LICENSE
