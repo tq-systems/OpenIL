@@ -1,0 +1,54 @@
+# Minimal SD card image for the NXP boards Template
+#
+# We mimic the .sdcard NXP's image format:
+# * the SD card must have 4 kB free space at the beginning,
+# * U-Boot is dumped as is,
+# * a FAT partition at offset 8 MB is containing zImage/uImage and DTB files
+# * a single root filesystem partition is required (ext2, ext3 or ext4)
+#
+
+image qspi_nor_flash.img {
+  hdimage {
+  }
+
+  partition rcw {
+    in-partition-table = "no"
+    image = "rcw_1300_spi_nor.bin"
+    offset = 0
+  }
+
+  partition ppa {
+    in-partition-table = "no"
+    image = "ppa.itb"
+    offset = 512
+  }
+
+  partition u-boot {
+    in-partition-table = "no"
+    image = "u-boot-with-spl.bin"
+    offset = 1M
+  }
+
+  partition dtb {
+    in-partition-table = "no"
+    image = "ls1028a-mbls1028a.dtb"
+    offset = 4M
+  }
+
+  partition hdp {
+    in-partition-table = "no"
+    image = "ls1028a-dp-fw.bin"
+    offset = 4608k
+  }
+
+  partition linux {
+    in-partition-table = "no"
+    image = "Image.gz"
+    offset = 5M
+  }
+  partition rootfs {
+    in-partition-table = "no"
+    image = "rootfs.ubi"
+    offset = 15M
+  }
+}
