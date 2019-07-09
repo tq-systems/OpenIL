@@ -19,7 +19,9 @@ define RCW_BUILD_CMDS
 		tclsh board/nxp/common/byte_swap.tcl $(@D)/$(RCW_BIN) $(@D)/$(RCW_BIN) 8; \
 		cp -f $(@D)/$(RCW_BIN).swapped $(BINARIES_DIR); \
 	else \
-		cp -f $(@D)/$(RCW_BIN) $(BINARIES_DIR); \
+		$(foreach f,$(RCW_BIN), \
+			cp -f $(@D)/$(f) $(BINARIES_DIR); \
+		)\
 	fi
 endef
 
