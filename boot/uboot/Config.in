@@ -30,6 +30,14 @@ config BR2_TARGET_UBOOT_BOARDNAME
 	  This will be suffixed with _config to meet U-Boot standard naming.
 	  See boards.cfg in U-Boot source code for the list of available
 	  configurations.
+
+config BR2_TARGET_UBOOT_BOARDNAME_APPEND
+	string "U-Boot board name append"
+	help
+	  One of U-Boot supported boards to be built.
+	  This list will be suffixed to BR2_TARGET_UBOOT_BOARDNAME
+	  See boards.cfg in U-Boot source code for the list of available
+	  configurations.
 endif
 
 choice

@@ -6,6 +6,7 @@
 
 UBOOT_VERSION = $(call qstrip,$(BR2_TARGET_UBOOT_VERSION))
 UBOOT_BOARD_NAME = $(call qstrip,$(BR2_TARGET_UBOOT_BOARDNAME))
+UBOOT_BOARD_NAME_APPEND = $(call qstrip,$(BR2_TARGET_UBOOT_BOARDNAME_APPEND))
 
 UBOOT_LICENSE = GPLv2+
 UBOOT_LICENSE_FILES = Licenses/gpl-2.0.txt
@@ -168,10 +169,14 @@ UBOOT_POST_PATCH_HOOKS += UBOOT_APPLY_LOCAL_PATCHES
 
 ifeq ($(BR2_TARGET_UBOOT_BUILD_SYSTEM_LEGACY),y)
 define UBOOT_CONFIGURE_CMDS
-	$(TARGET_CONFIGURE_OPTS) 	\
-		$(MAKE) -C $(@D) $(UBOOT_MAKE_OPTS)		\
-		$(UBOOT_BOARD_NAME)_config
+	$(foreach f,$(UBOOT_BOARD_NAME_APPEND), \
+		$(TARGET_CONFIGURE_OPTS)        \
+			$(MAKE) -C $(@D) $(UBOOT_MAKE_OPTS)             \
+			$(UBOOT_BOARD_NAME)_$(f)_config;\
+		cp -dpf $(@D)/.config $(@D)/.config.$(f);
+	)
 endef
+
 else ifeq ($(BR2_TARGET_UBOOT_BUILD_SYSTEM_KCONFIG),y)
 ifeq ($(BR2_TARGET_UBOOT_USE_DEFCONFIG),y)
 UBOOT_KCONFIG_DEFCONFIG = $(call qstrip,$(BR2_TARGET_UBOOT_BOARD_DEFCONFIG))_defconfig
@@ -190,9 +195,16 @@ endef
 endif # BR2_TARGET_UBOOT_BUILD_SYSTEM_LEGACY
 
 define UBOOT_BUILD_CMDS
-	$(TARGET_CONFIGURE_OPTS) 	\
-		$(MAKE) -C $(@D) $(UBOOT_MAKE_OPTS) 		\
-		$(UBOOT_MAKE_TARGET)
+	$(foreach f,$(UBOOT_BOARD_NAME_APPEND), \
+		cp -dpf $(@D)/.config.$(f) $(@D)/.config; \
+		$(TARGET_CONFIGURE_OPTS)	\
+			$(MAKE) -C $(@D) $(UBOOT_MAKE_OPTS)		\
+			$(UBOOT_MAKE_TARGET)
+		$(foreach b,$(UBOOT_BINS), \
+			cp -dpf $(@D)/$(b) $(@D)/$(basename $(b))_$(f).bin
+		)
+
+	)
 	$(if $(BR2_TARGET_UBOOT_FORMAT_SD),
 		$(@D)/tools/mxsboot sd $(@D)/u-boot.sb $(@D)/u-boot.sd)
 	$(if $(BR2_TARGET_UBOOT_FORMAT_NAND),
@@ -209,8 +221,10 @@ define UBOOT_BUILD_OMAP_IFT
 endef
 
 define UBOOT_INSTALL_IMAGES_CMDS
-	$(foreach f,$(UBOOT_BINS), \
-			cp -dpf $(@D)/$(f) $(BINARIES_DIR)/
+	$(foreach f,$(UBOOT_BOARD_NAME_APPEND), \
+		$(foreach b,$(UBOOT_BINS), \
+			cp -dpf $(@D)/$(basename $(b))_$(f).bin $(BINARIES_DIR)/
+		)
 	)
 	$(if $(BR2_TARGET_UBOOT_FORMAT_NAND),
 		cp -dpf $(@D)/u-boot.sb $(BINARIES_DIR))
