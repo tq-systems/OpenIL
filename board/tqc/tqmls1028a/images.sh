@@ -17,7 +17,7 @@ main()
 	local GENIMAGE_TMP="${BUILD_DIR}/genimage.tmp"
 
 	sed -e "s/%FILES%/${FILES}/" -e "s/%PARTITION_SIZE%/${BR2_ROOTFS_PARTITION_SIZE}/" \
-		board/tqc/tqmls1028a/genimage.cfg.template > ${GENIMAGE_CFG}
+		board/tqc/tqmls1028a/genimage_sdcard.cfg.template > ${GENIMAGE_CFG}
 
 	rm -rf "${GENIMAGE_TMP}"
 
