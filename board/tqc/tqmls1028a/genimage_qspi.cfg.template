@@ -25,7 +25,7 @@ image qspi_nor_flash.img {
 
   partition u-boot {
     in-partition-table = "no"
-    image = "u-boot-with-spl.bin"
+    image = "u-boot-with-spl_qspi.bin"
     offset = 1M
   }
 
