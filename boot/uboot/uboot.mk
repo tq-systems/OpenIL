@@ -196,7 +196,7 @@ endif # BR2_TARGET_UBOOT_BUILD_SYSTEM_LEGACY
 
 define UBOOT_BUILD_CMDS
 	$(foreach f,$(UBOOT_BOARD_NAME_APPEND), \
-		cp -dpf $(@D)/.config.$(f) $(@D)/.config; \
+		cp -df $(@D)/.config.$(f) $(@D)/.config; \
 		$(TARGET_CONFIGURE_OPTS)	\
 			$(MAKE) -C $(@D) $(UBOOT_MAKE_OPTS)		\
 			$(UBOOT_MAKE_TARGET)
