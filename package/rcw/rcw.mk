@@ -4,8 +4,8 @@
 #
 ################################################################################
 
-RCW_VERSION = TQMLS1028A-rcw-LSDK-18.12
-RCW_SITE = https://github.com/tq-systems/rcw.git
+RCW_VERSION = $(call qstrip,$(BR2_PACKAGE_RCW_UBOOT_CUSTOM_REPO_VERSION))
+RCW_SITE = $(call qstrip,$(BR2_PACKAGE_RCW_CUSTOM_REPO_URL))
 RCW_SITE_METHOD = git
 RCW_LICENSE = BSD License
 RCW_LICENSE_FILES = LICENSE

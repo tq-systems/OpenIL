@@ -1,7 +1,16 @@
+config BR2_PACKAGE_RCW_CUSTOM_REPO_URL
+	string "URL of custom repository"
+
+config BR2_PACKAGE_RCW_UBOOT_CUSTOM_REPO_VERSION
+	string "Custom repository version"
+	help
+	  Revision to use in the typical format used by Git/Mercurial/Subversion
+	  E.G. a sha id, a tag, branch, ..
+
 config BR2_PACKAGE_RCW
 	bool "rcw image"
 	help
-	The reset configuration word for NXP Layerscape platforms
+	The reset configuration words for NXP Layerscape platforms
 
 if BR2_PACKAGE_RCW
 config BR2_PACKAGE_RCW_BIN
