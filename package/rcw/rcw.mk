@@ -4,8 +4,13 @@
 #
 ################################################################################
 
+ifneq ($(BR2_RCW_SITE),)
+RCW_SITE := $(BR2_RCW_SITE)
+else
+RCW_SITE := $(call qstrip,$(BR2_PACKAGE_RCW_CUSTOM_REPO_URL))
+endif
+
 RCW_VERSION = $(call qstrip,$(BR2_PACKAGE_RCW_UBOOT_CUSTOM_REPO_VERSION))
-RCW_SITE = $(call qstrip,$(BR2_PACKAGE_RCW_CUSTOM_REPO_URL))
 RCW_SITE_METHOD = git
 RCW_LICENSE = BSD License
 RCW_LICENSE_FILES = LICENSE
