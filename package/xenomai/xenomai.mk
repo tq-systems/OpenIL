@@ -32,7 +32,7 @@ define XENOMAI_CREATE_MISSING_FILES
 	cd $(@D)/ && \
 	sed '92im4_pattern_allow([LT_SYS_SYMBOL_USCORE])' configure.ac > configure.ac.patched && \
 	mv configure.ac.patched configure.ac && \
-	cd $(@D)/ && ./scripts/bootstrap
+	cd $(@D)/ && $(TARGET_MAKE_ENV) ./scripts/bootstrap
 endef
 XENOMAI_POST_EXTRACT_HOOKS += XENOMAI_CREATE_MISSING_FILES
 
