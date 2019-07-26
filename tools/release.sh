@@ -242,6 +242,9 @@ function main () {
 		exit $E_UNKNOWN;
 	fi
 
+	mkdir -p ${PLATFORM}/dist
+	! [ -d ${PLATFORM}/dist ] && echo "dist dir creation failed, see log." && exit $E_UNKNOWN;
+
 	if [ "${EXTRACT_LICENSES}" -ne "0" ]; then
 		make legal-info | tee -a ${LOGFILE} && \
 		tar -cvzf ${PLATFORM_LIC_ARCHIVE} -C ${PLATFORM} legal-info
@@ -253,9 +256,6 @@ function main () {
 
 	export_src_packages ${PTXDIST} ${PLATFORM}/${TARBALLDIR} ${PTXDIST_CAN_PRINT}
 	[ "$?" -ne "0" ] && exit $E_UNKNOWN
-
-	mkdir -p ${PLATFORM}/dist
-	! [ -d ${PLATFORM}/dist ] && echo "dist dir creation failed, see log." && exit $E_UNKNOWN;
 
 	tar -cvzf ${PLATFORM_PKG_SRC_ARCHIVE} -C ${PLATFORM} ${TARBALLDIR}
 	ret=$?
