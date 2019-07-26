@@ -79,8 +79,7 @@ pipeline {
     post {
         success {
             script {
-                def platformDir = 'platform-' + sh(returnStdout: true, script: './p print PTXCONF_PLATFORM').trim()
-                archiveArtifacts artifacts: "${platformDir}/dist/*,${platformDir}/images/*"
+                archiveArtifacts artifacts: "output/dist/*,output/images/*"
             }
             wipeOutWs()
         }
