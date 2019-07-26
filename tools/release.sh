@@ -106,12 +106,14 @@ function export_src_packages () {
 	local PTX_PTXDIST=$1
 	local THE_TARBALLDIR=$2
 	local PTX_CAN_PRINT=$3
+	local SRC_DIR
+	eval SRC_DIR=${BR2_DL_DIR}
 
 	mkdir -p ${THE_TARBALLDIR}
 	[ "$?" -ne "0" ] && echo "error: creating ${THE_TARBALLDIR}" && return $E_UNKNOWN
 
 	for p in $(make external-deps); do
-		cp -v dl/${p} ${THE_TARBALLDIR} && echo ${p} >> ${THE_TARBALLDIR}/source.list
+		cp -v ${SRC_DIR}/${p} ${THE_TARBALLDIR} && echo ${p} >> ${THE_TARBALLDIR}/source.list
 		if [ $? -ne 0 ]; then
 			echo "source package export failed, see log.";
 			return $E_UNKNOWN;
