@@ -7,11 +7,13 @@
 DP_SITE = https://www.nxp.com/lgfiles/sdk/ls1028a_bsp_01
 DP_SOURCE = ls1028a-dp-fw.bin
 DP_BIN = $(call qstrip,$(BR2_PACKAGE_DP_BIN))
+DP_LICENSE_FILES = COPYING
 
 define DP_EXTRACT_CMDS
 	cp $(BR2_DL_DIR)/$(DP_SOURCE) $(@D)/ &&\
 	cd $(@D)/ && \
-	chmod +x $(DP_SOURCE) && ./$(DP_SOURCE) --auto-accept;
+	chmod +x $(DP_SOURCE) && ./$(DP_SOURCE) --auto-accept &&\
+	cp -pf ls1028a-dp-fw/COPYING $(@D);
 endef
 
 define DP_BUILD_CMDS
