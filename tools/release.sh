@@ -235,6 +235,7 @@ function main () {
 	fi
 
 	if [ "${HAVE_GIT}" -ne "0" ]; then
+		mkdir -p ${PLATFORM}/images
 		git log -1 > ${PLATFORM}/images/${STAMPFILE}
 	fi
 
