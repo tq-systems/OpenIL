@@ -32,6 +32,7 @@
 # DEBUGGING
 # set -e 
 set -C # noclobber
+set -o pipefail
 
 readonly PROGRAM="$(basename ${0})"
 readonly SCRIPT_LIBDIR="$(dirname ${0})"
